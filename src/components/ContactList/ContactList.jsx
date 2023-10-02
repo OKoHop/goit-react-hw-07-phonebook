@@ -5,7 +5,7 @@ import {
   StyledUl,
   StyledButton,
 } from './ContactList.style';
-import { deleteContact } from 'redux/slice';
+import { deleteContact } from 'redux/operations';
 
 export const ContactList = ({ title }) => {
   const contacts = useSelector(state => state.contacts.contacts);
@@ -25,7 +25,7 @@ export const ContactList = ({ title }) => {
           return (
             <StyledLi key={contact.id}>
               <p>{contact.name}</p>
-              <p>{contact.number}</p>
+              <p>{contact.phone}</p>
               <StyledButton
                 type="button"
                 onClick={() => dispatch(deleteContact(contact.id))}
