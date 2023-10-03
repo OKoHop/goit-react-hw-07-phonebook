@@ -7,7 +7,7 @@ import {
   StyledButton,
   StyledLabel,
   StyledField,
-} from './AddContact.styled';
+} from 'components/AddContact/AddContact.styled';
 import { addContact } from 'redux/operations';
 
 const addContactSchema = Yup.object().shape({

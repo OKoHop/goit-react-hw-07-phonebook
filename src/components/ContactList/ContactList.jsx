@@ -4,7 +4,7 @@ import {
   StyledH2,
   StyledUl,
   StyledButton,
-} from './ContactList.style';
+} from 'components/ContactList/ContactList.style';
 import { deleteContact } from 'redux/operations';
 
 export const ContactList = ({ title }) => {
