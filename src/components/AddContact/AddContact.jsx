@@ -15,7 +15,7 @@ const addContactSchema = Yup.object().shape({
     .min(3, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
-  number: Yup.number().min(10, 'Too Short!').required('Required'),
+  phone: Yup.number().min(10, 'Too Short!').required('Required'),
 });
 
 export const AddContact = () => {
@@ -27,7 +27,7 @@ export const AddContact = () => {
       <Formik
         initialValues={{
           name: '',
-          number: '',
+          phone: '',
         }}
         onSubmit={(values, actions) => {
           if (
@@ -36,10 +36,8 @@ export const AddContact = () => {
                 contact.name.toLowerCase() === values.name.toLowerCase()
             )
           ) {
-            console.log(values.name);
             return alert(`${values.name} is already in contact!`);
           }
-          // console.log(values);
           dispatch(addContact({ ...values }));
           actions.resetForm();
         }}
@@ -52,8 +50,12 @@ export const AddContact = () => {
             <ErrorMessage name="name" />
           </StyledLabel>
           <StyledLabel>
-            Number
-            <StyledField name="number" placeholder="0631234567"></StyledField>
+            Phone
+            <StyledField
+              name="phone"
+              placeholder="0631234567"
+              type="phone"
+            ></StyledField>
             <ErrorMessage name="number" />
           </StyledLabel>
           <StyledButton type="submit">Add contact</StyledButton>
