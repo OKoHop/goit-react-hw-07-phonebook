@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchContacts, addContact, deleteContact } from "redux/operations";
 
+
 const initialState = {
     contacts: [],
     isLoading: false,
@@ -16,10 +17,12 @@ const handleRejected = (state, action) => {
     state.error = action.payload;
 }
 
+const controller = new AbortController();
+
 const sliceContacts = createSlice({
     name: 'contacts',
     initialState,
-    extraReducers: builder => 
+    extraReducers: builder => {
         builder
             .addCase(fetchContacts.pending, handlePending)
             .addCase(fetchContacts.fulfilled, (state, action) => {
@@ -31,15 +34,21 @@ const sliceContacts = createSlice({
             .addCase(addContact.pending, handlePending)
             .addCase(addContact.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.contacts = [...state.contacts, action.payload];
+                if (state.contacts.find(contact => contact.name.toLowerCase() === action.payload.name.toLowerCase())) {
+                return alert(`${action.payload.name} is already in contact!`);
+                } else {
+                    state.contacts.push(action.payload);
+                };
                 state.error = null;
             })
             .addCase(addContact.rejected, handleRejected)
             .addCase(deleteContact.pending, handlePending)
             .addCase(deleteContact.fulfilled, (state, action) => {
-                state.contacts = state.contacts.filter(contact => contact.id !== action.payload);
+                state.contacts = state.contacts.filter(contact => contact.id !== action.payload.id);
             })
-            .addCase(deleteContact.rejected, handleRejected)
+            .addCase(deleteContact.rejected, handleRejected);
+    }
+        
 })
 
 export const sliceFilter = createSlice({

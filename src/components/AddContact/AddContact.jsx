@@ -29,6 +29,7 @@ export const AddContact = () => {
           number: '',
         }}
         onSubmit={(values, actions) => {
+          console.log(values);
           dispatch(addContact({ ...values }));
           actions.resetForm();
         }}
